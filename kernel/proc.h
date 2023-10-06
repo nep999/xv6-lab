@@ -103,4 +103,10 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
+
+  struct trapframe alarmframe; // <在发生sigalarm调用时，用于保存之前的trapframe>
+  int AlarmInteval;            // <触发alarm handler的时间间隔>
+  int  Counter;                // <计时器，记录从上次触发handler到现在经过的ticks数量>
+  int InHandler;              // <标志位，标识是否正在运行回调函数>
+  uint64 Handler;              // <handler在用户态的虚拟地址,回调函数指针 handler >
 };
